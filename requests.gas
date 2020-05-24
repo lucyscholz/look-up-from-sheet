@@ -1,0 +1,68 @@
+var sheetName = 'WebRequests'
+var scriptProp = PropertiesService.getScriptProperties()
+
+function intialSetup () {
+  var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  scriptProp.setProperty('key', activeSpreadsheet.getId())
+}
+
+function doPost (e) {
+  var lock = LockService.getScriptLock()
+  lock.tryLock(10000)
+
+  try {
+    var doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
+    var sheet = doc.getSheetByName(sheetName)
+    
+    var email = e.parameter['email'];
+    var idNumber = "";
+    
+    if (email != null) {
+ 
+      var lookup = doc.getSheetByName("Student Emails");
+      var data = lookup.getRange("A1:B" + lookup.getLastRow()).getValues();
+      var sentEmail = "No";
+      
+      while (idNumber == "") {
+        for(var i = 0; i < data.length; i++) {
+           if(data[i][1] == email) {
+              idNumber = data[i][0];
+           }
+         }
+         if(idNumber == "") {idNumber = "not able to be found. Please verify that you entered the correct email";}
+      }
+      MailApp.sendEmail({
+        to: email,
+        subject: "Your Student ID",
+        body: "Thank you for requesting your student ID. Your student ID number is " + idNumber + ".",
+        name: "Team College - Collegiate Academies"
+        });
+    }
+    
+    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
+    var nextRow = sheet.getLastRow() + 1
+
+    var newRow = headers.map(function(header) {
+      return header === 'timestamp' ? new Date() 
+      : header === 'id' ? idNumber
+      : e.parameter[header]
+    });
+
+    sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ 'result': 'success', 'row': nextRow }))
+      .setMimeType(ContentService.MimeType.JSON)
+  }
+
+  catch (e) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ 'result': 'error', 'error': e }))
+      .setMimeType(ContentService.MimeType.JSON)
+  }
+
+  finally {
+    lock.releaseLock()
+  }
+}
+

@@ -1,0 +1,366 @@
+<html>
+<head>
+    <title>Enrollment Steps</title> 
+</head> 
+<style> 
+    *{font-family:'Century Gothic','Futura',san-serif;}
+    
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    table {
+        width:fit;
+    }
+    table, th, td {
+      border-collapse: collapse;
+      padding: 4px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: aliceblue;
+    }
+
+</style>
+    
+<body>
+    <Form id="getId" name="status-lookup">
+      <b>Enter Your Student Number: </b><input type="text" name="studentId" id="idEntry" required minlength="5" maxlength="5" size="10">
+      <input id="submit" type="submit" value="Submit" class="btn btn-info">
+    </Form>
+    <text id="errorlabel" style="display:none"><b>Please try again. There are no students with ID number: </b></text><text id="error" style="display:none"></text>
+    <text id="enrollmentlabel" style="display:none"><b><br>Enrollment Plan: </b></text><text id="enrollment" style="display:none"></text>
+    <text id="pathwaylabel" style="display:none"><b><br>Pathway: </b></text><text id="pathway" style="display:none"></text>
+    <text id="percentlabel" style="display:none"><b><br>Percent of Enrollment Steps Completed: </b></text><text id="percent" style="display:none"></text>
+    <br>
+    <br>
+    <table id = "college" style="display:none">
+        <tr>
+             <th>Step</th>
+             <th>Description</th>
+             <th>Status</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Accuplacer Testing</td>
+            <td id ="c4"><text id="college4" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Housing (applied, deposit paid)</td>
+            <td id = "c5"><text id="college5" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Orientation (registered, paid)</td>
+            <td id = "c6"><text id="college6" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Immunization Record or Waiver Submitted</td>
+            <td id = "c7"><text id="college7" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Verified FAFSA Completion</td>
+            <td id = "c8"><text id="college8" style="display:none"></text></td>
+        </tr>  
+        <tr>
+            <td>6</td>
+            <td>Tax Transcripts Received</td>
+            <td id = "c9"><text id="college9" style="display:none"></text></td>
+        </tr> 
+        <tr>
+            <td>7</td>
+            <td>Financial aid forms from college completed</td>
+            <td id = "c10"><text id="college10" style="display:none"></text></td>
+        </tr> 
+        <tr>
+            <td>8</td>
+            <td>Loan Counseling & MPN Complete</td>
+            <td id = "c11"><text id="college11" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Accepted financial aid award on student portal</td>
+            <td id = "c12"><text id="college12" style="display:none"></text></td>
+        </tr>  
+        <tr>
+            <td>10</td>
+            <td>Registered for classes</td>
+            <td id = "c13"><text id="college13" style="display:none"></text></td>
+        </tr>  
+        <tr>
+            <td>11</td>
+            <td>If TOPS eligible, set up LOSFA account</td>
+            <td id = "c14"><text id="college14" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>If IEP/504 eligible, register with ODS</td>
+            <td id = "c15"><text id="college15" style="display:none"></text></td>
+        </tr>  
+    </table>
+    
+    <table id = "military" style="display:none">
+        <tr>
+             <th>Step</th>
+             <th>Description</th>
+             <th>Status</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>ASVAB Testing</td>
+            <td id ="m4"><text id="mil4" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Application completed</td>
+            <td id = "m5"><text id="mil5" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Interview steps completed</td>
+            <td id = "m6"><text id="mil6" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Enrollment Confirmed</td>
+            <td id = "m7"><text id="mil7" style="display:none"></text></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Verified FAFSA Completion</td>
+            <td id = "m8"><text id="mil8" style="display:none"></text></td>
+        </tr>  
+    </table>
+    
+    <br><b>Need additional support? </b>
+    <br>Check out our enrollment steps guidance <a href="#link">here.</a>
+    <br>Please reach out to your college counselor if you have questions.
+    <br>
+
+    
+    <br><b>Completed some of these steps?</b>
+    <br>Update your college counselor using this <a href="#linktoform">form</a>.
+    <br>
+    <br>
+    
+    
+    
+    <b>Don't know your student number?</b>
+    <form id="forgot" name="forgot">
+    <input id="email" name="email" placeholder="Enter your school email" type="text" size="30">
+    <input id="submit" type="submit" value="Request ID" class="btn btn-info">
+    </form>
+    
+    <!-- The Modal -->
+    <div id="popUp" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <text id = "modal"></text>
+        </div>
+    </div>
+    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+
+    <script>
+        var studentData;
+        const form = document.forms['status-lookup'];
+        const email = document.forms['forgot'];
+        // Get the modal
+        var modal = document.getElementById("popUp");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        $(document).ready(function(){
+            $.get( "[INSERT LINK TO API CREATED BY GOOGLE SHEET]", function(data) {
+                studentData = data;
+            })
+        });
+
+        $('#getId').submit(function(e){
+            e.preventDefault();
+            fetch('[INSERT URL OF GOOGLE APPS SCRIPT WRITEN TO RECEIVE FORM DATA]',
+                  {method: 'POST', mode: 'no-cors', body: new FormData(form)})
+                  .then(response => console.log('Success!', response))
+                  .catch(error => console.error('Error!', error.message))
+            display($('#idEntry').val());
+        });
+        
+        $('#forgot').submit(function(e){
+            e.preventDefault();
+            fetch('[INSERT URL OF GOOGLE APPS SCRIPT WRITEN TO RECEIVE FORM DATA]',
+                  {method: 'POST', mode: 'no-cors', body: new FormData(email)})
+                  .then(response => console.log('Success!', response))
+                  .catch(error => console.error('Error!', error.message))
+            $('#modal').html("An email with your ID has been sent to " +$('#email').val()+".");
+            modal.style.display = "block";
+            email.reset();
+        });
+
+        function display (scholarId) {
+            $('#college').hide();
+            $('#military').hide();
+            $('#error').hide();
+            $('#errorlabel').hide();
+            var match = 0;
+            for(i=0;i<studentData.values.length;i++){
+                var student = studentData.values[i];
+                if(student[0] == scholarId){
+                      match++;
+                      $('#enrollment').html(student[1]);
+                      $('#pathway').html(student[2]);
+                      $('#percent').html(student[3]);
+                      $('#enrollmentlabel').show();
+                      $('#pathwaylabel').show();
+                      $('#percentlabel').show();                    
+                      $('#enrollment').show();
+                      $('#pathway').show();
+                      $('#percent').show();
+        
+                      if(student[2]=="College Pathway") {
+                          for(x=4;x<16;x++) {
+                            if(student[x] == "Not started yet" || student[x] == "None sent" ) {
+                                var id = 'c' + x;
+                                document.getElementById(id).style.backgroundColor = 'LightCoral';
+                            }
+                            else if(student[x] == "N/A") {
+                                var id = 'c' + x;
+                                document.getElementById(id).style.backgroundColor = 'Gainsboro';
+                            }
+                            else if(student[x] == "Done" || student[x] == "Both received") {
+                                var id = 'c' + x;
+                                document.getElementById(id).style.backgroundColor = 'MediumSeaGreen';
+                            }
+                            else {
+                                var id = 'c' + x;
+                                document.getElementById(id).style.backgroundColor = 'Orange';
+                            }
+                          }
+                          
+                          $('#college').show();
+                          $('#college4').html(student[4]);
+                          $('#college5').html(student[5]);
+                          $('#college6').html(student[6]);
+                          $('#college7').html(student[7]);
+                          $('#college8').html(student[8]);
+                          $('#college9').html(student[9]);
+                          $('#college10').html(student[10]);
+                          $('#college11').html(student[11]);
+                          $('#college12').html(student[12]);
+                          $('#college13').html(student[13]);
+                          $('#college14').html(student[14]);
+                          $('#college15').html(student[15]);
+                          $('#college4').show();
+                          $('#college5').show();
+                          $('#college6').show();
+                          $('#college7').show();
+                          $('#college8').show();
+                          $('#college9').show();
+                          $('#college10').show();
+                          $('#college11').show();
+                          $('#college12').show();
+                          $('#college13').show();
+                          $('#college14').show();
+                          $('#college15').show();
+                      }
+                      if(student[2]=="Military/BY Pathway") {
+                          for(x=4;x<9;x++) {
+                            if(student[x] == "Not started yet" || student[x] == "None sent" ) {
+                                var id = 'm' + x;
+                                document.getElementById(id).style.backgroundColor = 'LightCoral';
+                            }
+                            else if(student[x] == "N/A") {
+                                var id = 'm' + x;
+                                document.getElementById(id).style.backgroundColor = 'Gainsboro';
+                            }
+                            else if(student[x] == "Done" || student[x] == "Both received") {
+                                var id = 'm' + x;
+                                document.getElementById(id).style.backgroundColor = 'MediumSeaGreen';
+                            }
+                            else {
+                                var id = 'm' + x;
+                                document.getElementById(id).style.backgroundColor = 'Orange';
+                            }
+                          }
+                          
+                          $('#military').show();
+                          $('#mil4').html(student[4]);
+                          $('#mil5').html(student[5]);
+                          $('#mil6').html(student[6]);
+                          $('#mil7').html(student[7]);
+                          $('#mil8').html(student[8]);
+
+                          $('#mil4').show();
+                          $('#mil5').show();
+                          $('#mil6').show();
+                          $('#mil7').show();
+                          $('#mil8').show();
+
+                      }
+                }
+            }
+            if(match === 0){
+                $('#enrollmentlabel').hide();
+                $('#pathwaylabel').hide();
+                $('#percentlabel').hide();                    
+                $('#enrollment').hide();
+                $('#pathway').hide();
+                $('#percent').hide();
+                $('#college').hide();
+                $('#milary').hide();
+                $('#errorlabel').show();
+                $('#error').html(scholarId);
+                $('#error').show();
+            }
+        }
+    </script>
+</body>
+</html>
